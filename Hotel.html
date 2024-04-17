@@ -24,7 +24,7 @@
 			var bemvindo = "Seja bem-vindo ao Hotel " + nomehotel + ', ' + nome + ". É um imenso prazer ter você por aqui!"
 			alert(bemvindo)
 
-			var escolha = parseInt(prompt('Selecione uma opção \n1.) Cadastrar \n2.) Pesquisar \n3.) Listar \n4.) Eventos \n5;) Álcool ou gasolina? \n6.) Sair'));
+			var escolha = parseInt(prompt('Selecione uma opção \n1.) Cadastrar \n2.) Pesquisar \n3.) Listar \n4.) Eventos \n5.) Álcool ou gasolina? \n6.) Ar puro, finalmente \n7.) Sair'));
 			var senha = parseInt(prompt('Digite sua senha: '))
 
 			if (senha == 2678) {
@@ -45,6 +45,9 @@
 						alcoolougasolina();
 						break;
 					case 6:
+						Arpuro();
+						break;
+					case 7:
 						sair();
 						break;
 					default:
@@ -105,14 +108,6 @@
 
 					var confirmar = prompt("Confirme a reservar (S/N) ?").toUpperCase()
 
-					/*if (confirmar === "S") {
-						alert("Reserva confirmada.")
-
-					} else {
-						alert("Reserva cancelada.")
-						quartos[numeroQuarto] = false
-					}*/
-
 					if (confirmar) {
 						var hospede = {
 							nome: nomeHospede,
@@ -164,39 +159,7 @@
 				alert("Hóspede não encontrado")
 			}
 
-			/*while (true) {
-				hospede = prompt("Informe o nome do hóspede (PARE para encerrar):");
 
-				if (hospede === "PARE") {
-					break;
-				}
-
-				idade = parseInt(prompt("Informe a idade do hóspede:"));
-
-				if (isNaN(idade)) {
-					alert("Idade inválida. Tente novamente.");
-					continue;
-				}
-
-				if (idade <= 6) {
-					gratuidades++;
-					alert(hospede + " possui gratuidade.");
-				} else if (idade >= 60) {
-					meiasHospedagens++;
-					valor = diaria / 2;
-					total += valor;
-					alert(hospede + " paga meia.");
-				} else {
-					valor = diaria;
-					total += valor;
-					alert(hospede + " não paga meia e nem gratuidade ");
-				}
-			}
-
-			alert("Quantidade de gratuidades: " + gratuidades + 
-			
-			"\n Quantidade de meias hospedagens: " + meiasHospedagens) ;
-			alert("Total: R$ " + total.toFixed(2).reserva_quartos());*/
 			inicio();
 
 		}
@@ -286,12 +249,12 @@
 
 
 							var numGarcons = Math.ceil(convidados / 12);
-							numGarcons += Math.ceil(duracao / 2) * convidados / 12;
-							var custoTotalGarcons = numGarcons * 10.50 * duracao;
-							var custoTotal = custoAgua + custoCafe + custoSalgados + custoTotalGarcons;
+							/*numGarcons += Math.ceil(duracao / 2) * convidados / 12;*/
+							var custoTotalGarcons =  (numGarcons* 10.5)*duracao
+							/*var custoTotal = custoAgua + custoCafe + custoSalgados + custoTotalGarcons;*/// + custoTotalGarcons;
 
 
-							alert("Serão necessários " + numGarcons + " garçons para o evento, totalizando um custo de R$" + custoTotal.toFixed(2) + " para o hotel.");
+							alert("Serão necessários " + numGarcons + " garçons para o evento, totalizando um custo de R$" + custoTotalGarcons.toFixed(2) + " para o hotel.");
 						} else {
 							alert("O auditório não está disponível neste horário.");
 							eventos();
@@ -373,6 +336,41 @@
 			alert(mensagem);
 		}
 
+		function Arpuro(valorServicoPorAparelho, quantidadeAparelhos, percentualDesconto, quantidadeMinima) {
+			var custoTotal = valorPorAparelho * quantidade;
+
+			if (quantidade >= quantidadeMinima) {
+				custoTotal = custoTotal - (custoTotal * (desconto / 100));
+			}
+
+			alert(`O serviço de ${nomeEmpresa} custará R$ ${custoTotal}`);
+
+			return custoTotal;
+		}
+
+		var menorValor = Infinity;
+		var empresaMenorValor = '';
+
+		do {
+			var nomeEmpresa = prompt("Informe o nome da empresa:");
+			var valorPorAparelho = parseFloat(prompt("Informe o valor do serviço por aparelho:"));
+			var quantidade = parseInt(prompt("Informe a quantidade de aparelhos em manutenção:"));
+			var desconto = parseFloat(prompt("Informe o percentual de desconto (pode ser zero):"));
+			var quantidadeMinima = parseInt(prompt("Informe a quantidade mínima de aparelhos para desconto:"));
+
+			var totalCalculado = Arpuro(valorPorAparelho, quantidade, desconto, quantidadeMinima, nomeEmpresa);
+
+			if (totalCalculado < menorValor) {
+				menorValor = totalCalculado;
+				empresaMenorValor = nomeEmpresa;
+			}
+
+			var continuar = prompt("Deseja informar novos dados? (S/N)").toUpperCase();
+		} while (continuar !== 'N');
+
+		alert(`O orçamento de menor valor é o de ${empresaMenorValor} por R$ ${menorValor}`);
+
+
 		function erro() {
 			alert('Por favor, informe um número entre 1 e 4');
 			inicio();
@@ -388,8 +386,6 @@
 				inicio();
 			}
 		}
-
-
 
 		inicio();
 	</script>
